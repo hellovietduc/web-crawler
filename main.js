@@ -92,7 +92,21 @@ const crawl = async (url, depth, host, tries) => {
 };
 
 (async () => {
-  await crawl('https://' + argUrl, argDepth, 'https://' + argUrl, 0);
+  // Determine the protocol
+  let protocol;
+  try {
+    await axios.get('https://' + argUrl);
+    protocol = 'https://';
+    console.log('Protocol: https');
+  } catch (err) {
+    protocol = 'http://';
+    console.log('Protocol: http');
+  }
+
+  // Crawl
+  await crawl(protocol + argUrl, argDepth, protocol + argUrl, 0);
+
+  // Save output
   Array.from(Store.map.entries())
     .sort((a, b) => b[1] - a[1])
     .forEach(([key, val]) => fs.appendFileSync(argOutput, `${key}\t${val}\n`));
