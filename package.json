@@ -1,7 +1,7 @@
 {
   "name": "web-crawler",
   "description": "A program that crawls text data from a website at any depth level",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "main.js",
   "scripts": {
     "crawl": "node main.js"

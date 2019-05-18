@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const argUrl = process.argv[2].replace(/\s+/g, '');
 const argDepth = parseInt(process.argv[3]);
+const argOutput = (process.argv[4] || 'output.txt').replace(/\s+/g, '');
 
 if (argUrl.startsWith('https://') || argUrl.startsWith('http://')) {
   console.log('Argument url should not need to include protocol');
@@ -11,6 +12,10 @@ if (argUrl.startsWith('https://') || argUrl.startsWith('http://')) {
 }
 if (Number.isNaN(argDepth)) {
   console.log('Argument depth should be a number');
+  process.exit(0);
+}
+if (!argOutput.endsWith('.txt')) {
+  console.log('Argument output must be a .txt file');
   process.exit(0);
 }
 
@@ -42,7 +47,7 @@ const extractText = $ =>
     .replace(' -', '')
     .split(' ');
 
-// Count number of appearances each word
+// Count number of appearances of each word
 const countAppearances = text => {
   const words = new Map();
   text.forEach(w => words.set(w, (words.has(w) ? words.get(w) : 0) + 1));
@@ -90,5 +95,5 @@ const crawl = async (url, depth, host, tries) => {
   await crawl('https://' + argUrl, argDepth, 'https://' + argUrl, 0);
   Array.from(Store.map.entries())
     .sort((a, b) => b[1] - a[1])
-    .forEach(([key, val]) => fs.appendFileSync('output.txt', `${key}\t${val}\n`));
+    .forEach(([key, val]) => fs.appendFileSync(argOutput, `${key}\t${val}\n`));
 })();
