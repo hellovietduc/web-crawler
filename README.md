@@ -4,13 +4,11 @@ A program that crawls text data from a website at any depth level
 
 ### How to use?
 
-1. Clone the repo
+1. Download the executable file from [releases](https://github.com/vietduc01100001/web-crawler/releases)
 
-2. Install dependencies by running `npm install`
+2. Run: `./web-crawler <website> <depth> <output file>`
 
-3. Start crawling by running `npm run crawl <website> <depth> <output file>`
-
-   Example: `npm run crawl github.com 2 output.txt`
+   Example: `./web-crawler github.com 2 output.txt`
 
 Output is a text file which contains all the words from the crawled website with their number of appearances:
 
